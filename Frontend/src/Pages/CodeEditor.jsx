@@ -41,7 +41,7 @@ export function CodeEditor(props) {
             />
             <button onClick={() => console.log(starterCode)}>Próba</button>
             <button onClick={CodingExerciseCorrection}>Submit</button>
-            <p>Result: {isCorrect}</p>
+            <p>{isCorrect}</p>
         </>
         
     )
