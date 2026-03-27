@@ -8,6 +8,7 @@ from Services.lesson import lesson_bp
 from Services.question import question_bp
 from Services.coding_exercise import coding_exercise_bp
 from Services.ollama_api import ollama_bp
+from Services.exercise_generation import generate_bp
 # database models
 from Models.user import User
 from Models.auth_provider import AuthProvider
@@ -37,6 +38,7 @@ def create_app():
     app.register_blueprint(question_bp, url_prefix='/api/questions')
     app.register_blueprint(coding_exercise_bp, url_prefix='/api/coding-exercises')
     app.register_blueprint(ollama_bp, url_prefix='/api/fix-codes')
+    app.register_blueprint(generate_bp, url_prefix='/api/generates')
 
     @app.route('/')
     def home():

@@ -1,0 +1,20 @@
+.submit-button {
+    width: 200px;
+    background: linear-gradient(
+        180deg,
+        #f8f8f8,
+        #ededed
+    );
+    color: #000000;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border: 2px solid #C1121F;
+    border-radius: 32px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.submit-arrow {
+    width: 32px;
+}

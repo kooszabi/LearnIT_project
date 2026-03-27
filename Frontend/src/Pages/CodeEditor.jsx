@@ -2,12 +2,12 @@ import Editor from '@monaco-editor/react'
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
+import "./CodeEditor.css";
 
 export function CodeEditor(props) {
     const [starterCode, setStarterCode] = useState(
         () => props.starter_code || ""
     );
-    const [isCorrect, setIsCorrect] = useState(null);
 
     
 
@@ -20,8 +20,9 @@ export function CodeEditor(props) {
             }
         )
         .then(res => {
-            setIsCorrect(res.data.response);
-            console.log("is_correct: ", res.data.response);
+            const result = res.data.response;
+            props.result(result);
+            console.log("is_correct: ", result);
             }
         )
         .catch(err => {
@@ -34,14 +35,16 @@ export function CodeEditor(props) {
         <>
             <Editor
                 height="400px"
+                width="600px"
                 defaultLanguage="python"
                 value={starterCode}
                 onChange={value => setStarterCode(value || "")}
                 theme='vs-dark'
             />
-            <button onClick={() => console.log(starterCode)}>Próba</button>
-            <button onClick={CodingExerciseCorrection}>Submit</button>
-            <p>{isCorrect}</p>
+{/*             <button onClick={() => console.log(starterCode)}>Próba</button> */}
+            <button className="submit-button" onClick={CodingExerciseCorrection}>
+                <img className="submit-arrow" src='/images/component_icons/icons8-submit-progress-50.png' />
+                Submit</button>
         </>
         
     )

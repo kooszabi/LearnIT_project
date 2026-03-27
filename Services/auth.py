@@ -4,8 +4,8 @@ from Models.user import User
 from Models.auth_provider import AuthProvider
 from datetime import datetime
 import os
-from google.oauth2 import id_token
-from google.auth.transport import requests
+# from google.oauth2 import id_token
+# from google.auth.transport import requests as google_requests
 # from flask_cors import cross_origin
 import requests as github_requests
 
@@ -16,6 +16,79 @@ GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 @auth_bp.route('/google', methods=['POST'])
 def google_login():
     token = request.json.get('token')
+    if not token:
+        return jsonify({'error': 'Token is missing'}), 400
+    print("\n\n\ntoken: ", token, "\n\n\n")
+    try:
+        google_response = github_requests.get(
+            "https://www.googleapis.com/oauth2/v3/userinfo",
+            headers={
+                "Authorization": f"Bearer {token}"
+            }
+        )
+        if google_response.status_code != 200:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        print("\n\n\n\n", google_response, "\n\n\n\n")
+        user_info = google_response.json()
+        provider_user_id = user_info.get('sub')
+        email = user_info.get('email')
+        username = user_info.get('name')
+        created_at = datetime.utcnow()
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 401
+
+    user = User.query.filter_by(email=email).first()
+    auth_provider = AuthProvider.query.filter_by(provider_user_id=provider_user_id).first()
+
+    if not user and not auth_provider:
+        user = User(
+            username=username,
+            email=email,
+            created_at=created_at
+        )
+        db.session.add(user)
+        db.session.commit()
+
+        user = User.query.filter_by(email=email).first()
+        auth_provider = AuthProvider(
+            provider_name = 'google',
+            provider_user_id = provider_user_id,
+            created_at = created_at,
+            user_id = user.id
+        )
+        db.session.add(auth_provider)
+        db.session.commit()
+
+        return jsonify({
+            'message': 'User created with google auth',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'created_at': user.created_at,
+                'provider_user_id': provider_user_id,
+                'provider_name': auth_provider.provider_name
+            }
+        }), 201
+    
+    elif user and not auth_provider:
+        auth_provider = AuthProvider(
+            provider_name = 'google',
+            provider_user_id = provider_user_id,
+            created_at = created_at,
+            user_id = user.id
+        )
+        db.session.add(auth_provider)
+        db.session.commit()
+
+        return jsonify({'message': 'Auth provider linked to existing user'}), 201
+    
+    else:
+        return jsonify({'message': 'User already exists'}), 200
+
+    """ token = request.json.get('token')
     if not token:
         return jsonify({'error': 'Token is missing'}), 400
     try:
@@ -78,6 +151,8 @@ def google_login():
     else:
         return jsonify({'message': 'User already exists'}), 200
     
+
+ """
 
 @auth_bp.route('/github', methods=['POST'])
 # @cross_origin(origin='http://localhost:5173')

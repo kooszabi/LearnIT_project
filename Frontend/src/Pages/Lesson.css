@@ -1,0 +1,23 @@
+* {
+    padding: 0;
+    margin:0;
+}
+
+.lesson-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.lesson-material {
+    flex: 1;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.exercises-container {
+    flex: 1;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+}

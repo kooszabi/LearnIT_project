@@ -1,0 +1,51 @@
+.lesson-material-container {
+    padding: 20px;
+}
+
+.title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.description {
+    margin-bottom: 15px;
+
+}
+
+.text {
+    padding: 10px 0;
+}
+
+.example-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.example {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    height: fit-content;
+    padding: 40px;
+    background-color: #a8dadc;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 32px;
+}
+
+.note {
+    background: #fff3cd;
+    padding: 10px;
+    margin: 10px 0;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 32px;
+}

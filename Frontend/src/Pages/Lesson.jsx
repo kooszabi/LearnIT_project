@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { CodeEditor } from './CodeEditor';
+/* import { CodeEditor } from './CodeEditor'; */
+import { Quiz } from './Components/Quiz';
+import { LessonMaterial } from './Components/LessonMaterial';
+import './Lesson.css';
 
 export function Lesson() {
     const lessonId = useParams().lessonId;
     const [lessonTitle, setLessonTitle] = useState(null);
-    const [lessonContent, setLessonContent] = useState(null);
+    const [lessonMaterial, setLessonMaterial] = useState(null);
     const [lessonQuestions, setLessonQuestions] = useState(null);
     const [lessonCodingExercises, setLessonCodingExercises] = useState(null);
 
@@ -20,7 +23,7 @@ export function Lesson() {
         .then(res => {
             // console.log("api/lessons response: ", res.data);
             setLessonTitle(res.data.content.title);
-            setLessonContent(res.data.content);
+            setLessonMaterial(res.data.content);
             console.log("Lesson title: ", res.data.content.title);
             console.log("Lesson content: ", res.data.content);
         })
@@ -62,50 +65,31 @@ export function Lesson() {
     }, [lessonId]);
 
 
-    if (!lessonContent) return <p>Loading the lesson...</p>;
+    if (!lessonMaterial) return <p>Loading the lesson...</p>;
     if (!lessonQuestions) return <p>Loading the questions...</p>;
     if (!lessonCodingExercises) return <p>Loading the coding exercises...</p>
 
     return (
         <>
-            <h2>{lessonTitle}</h2>
+            <div className='lesson-container'>
+                <div className='lesson-material'>
+                    <LessonMaterial 
+                                lessonTitle={lessonTitle}
+                                lessonMaterial={lessonMaterial} />
+                </div>
 
-            <p>{lessonContent.description}</p>
+
+                <div className='exercises-container'>
+                    <Quiz 
+                        lessonQuestions={lessonQuestions}
+                        lessonCodingExercises={lessonCodingExercises}
+                    />
+
+                </div>
+            </div>
+            
 
             
-            {lessonContent.content.map(block => {
-                switch(block.type){
-                    case "text":
-                        return <p key={block.id}>{block.value}</p>;
-                    case "example":
-                        return <pre key={block.id}><code>{block.value}</code></pre>;
-                    case "note":
-                        return <div key={block.id} style={{background: "#fff3cd", padding:"10px", margin:"10px 0"}}>{block.value}</div>;
-                    default:
-                        return null;
-                }
-            })}
-
-            {lessonQuestions.map(q => (
-                <div key={q.id}>
-                    <p>{q.text}</p>
-
-                    {q.options.map(opt => (
-                        <div key={opt.id}>
-                            {opt.question_option_text}
-                        </div>
-                    ))}
-                </div>
-            ))}
-
-            {lessonCodingExercises.map(cd => (
-                <div key={cd.id}>
-                    <h6>{cd.title}</h6>
-                    <p>{cd.description}</p>
-
-                    <CodeEditor key={lessonId} starter_code={cd.starter_code} description={cd.description}/>
-                </div>
-            ))}
         </>
     )
 }
