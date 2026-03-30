@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-.home-page {
+.layout-page {
     background-color: #E5E8EA;
     height: 100vh;
     display: flex;
@@ -20,6 +20,8 @@
     display: flex;
     flex-direction: column;
     transition: width 0.3s ease;
+    position: sticky;
+    top: 0;
 }
 
 .navbar-container p {
@@ -137,13 +139,7 @@
 
 .icons-navbar img {
     width:  24px;
-    opacity: 0.7;
 }
-
-.navbar-container a:hover img {
-    opacity: 1;
-}
-
 
 .icons-navbar a {
     height: 100%;

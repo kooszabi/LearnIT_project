@@ -26,7 +26,7 @@ export function Layout() {
 
     return (
         <>
-            <div className="home-page">
+            <div className="layout-page">
                 <div className="navbar-container">
                     <p><img src="/images/home_icons/icons8-code-64 (2).png"/>LearnIT</p>
                     <div className="divider"></div>
