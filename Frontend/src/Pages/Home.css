@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+.home-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* height: 100vh; */
+    padding-bottom: 50px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.home-page-title {
+    font-family:'Poppins', sans-serif;
+    /* margin: 50px 100px; */
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-page-hline {
+    height: 18px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 50px auto;
+    border-radius: 32px;
+}
+
+.coding-journeys-container {
+    width:  100%;
+    /* min-height: 800px; */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+
+    flex-wrap: wrap;
+}
+
+.coding-journeys-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    border: 4px solid rgba(182, 180, 180, 0.5);
+    border-radius: 32px;
+    background-color: #ddd;
+
+    height: 300px;
+    width: 300px;
+
+    gap: 20px;
+    padding: 30px 0;
+
+    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+}
+
+.coding-journeys-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: auto;
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFFFFF;
+
+    border: 2px solid rgba(182, 180, 180, 0.5);
+    border-radius: 16px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+}
+
+.coding-journeys-button:hover {
+    transform:translateY(2px);
+}
+
+.coding-journeys-button-image {
+    width: 30px;
+}
+
+.coding-journeys-image {
+    width: 120px;
+}
+
+.coding-journeys-card-title {
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+}

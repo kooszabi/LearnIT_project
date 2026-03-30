@@ -1,17 +1,12 @@
-import { googleLogout } from "@react-oauth/google"
+/* import { googleLogout } from "@react-oauth/google" */
 import { useNavigate } from "react-router-dom"
 /* import { useEffect, useState } from "react";
 import axios from "axios"; */
-import { Card } from "./Card";
+/* import { Card } from "./Card"; */
 import './Home.css';
+
 export function Home() {
-
     const navigate = useNavigate();
-
-    function handleLogout() {
-        googleLogout();
-        navigate("/");
-    }
 
     /* const [generatedQuestions, setGeneratedQuestions] = useState(null);
     useEffect(() => {
@@ -51,23 +46,48 @@ export function Home() {
             ))}
             
         </div>)} */}
+            <div className="home-page">
+                <h1 className="home-page-title">
+                    Coding Journeys
+                </h1>
+                <div className="home-page-hline"/>
 
-            <nav>
-                <ul>
-                    <li><a href="#"></a>Home</li>   
-                    <li><a href="#"></a>Variables</li>    
-                    <li><a href="#"></a>Print</li>    
-                    <li><a href="#"></a>...</li>    
-                    <li><a href="#"></a>Log Out</li>    
-                </ul>
-            </nav>
+                <div className="coding-journeys-container">
+                    <div className="coding-journeys-card">
+                        <img className="coding-journeys-image" src="/images/home_icons/icons8-python-96.png" />
+                        <h3 className="coding-journeys-card-title">
+                            Python
+                        </h3>
+                        <button onClick={() => navigate("/python")} className="coding-journeys-button">
+                            Let's explore...
+                            <img className="coding-journeys-button-image" src="/images/home_icons/icons8-explore-96.png" />
+                        </button>
+                    </div>
 
-            <p>Welcome to the Home page!</p>
-            <button onClick={handleLogout}>Log out</button> 
+                    <div className="coding-journeys-card">
+                        <img className="coding-journeys-image" src="/images/home_icons/icons8-c-sharp-logo-2-96.png" />
+                        <h3 className="coding-journeys-card-title">
+                            C#
+                        </h3>
+                        <button onClick={() => navigate("/home")} className="coding-journeys-button">
+                            Let's explore...
+                            <img className="coding-journeys-button-image" src="/images/home_icons/icons8-explore-96.png" />
+                        </button>
+                    </div>
 
-            <div>
-                <Card lessonId={1} />
+                    <div className="coding-journeys-card">
+                        <img className="coding-journeys-image" src="/images/home_icons/icons8-java-96.png" />
+                        <h3 className="coding-journeys-card-title">
+                            Java
+                        </h3>
+                        <button onClick={() => navigate("/home")} className="coding-journeys-button">
+                            Let's explore...
+                            <img className="coding-journeys-button-image" src="/images/home_icons/icons8-explore-96.png" />
+                        </button>
+                    </div>
+                </div>
             </div>
+            
         </>
     
     )
