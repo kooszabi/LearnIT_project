@@ -9,6 +9,7 @@ from Services.question import question_bp
 from Services.coding_exercise import coding_exercise_bp
 from Services.ollama_api import ollama_bp
 from Services.exercise_generation import generate_bp
+from Services.user_score import user_progress_bp
 # database models
 from Models.user import User
 from Models.auth_provider import AuthProvider
@@ -17,6 +18,7 @@ from Models.lesson import Lesson
 from Models.question import Question
 from Models.question_option import QuestionOption
 from Models.coding_exercise import CodingExercise
+from Models.user_progress import UserProgress
 
 def create_app():
 
@@ -39,6 +41,7 @@ def create_app():
     app.register_blueprint(coding_exercise_bp, url_prefix='/api/coding-exercises')
     app.register_blueprint(ollama_bp, url_prefix='/api/fix-codes')
     app.register_blueprint(generate_bp, url_prefix='/api/generates')
+    app.register_blueprint(user_progress_bp, url_prefix='/api/progresses')
 
     @app.route('/')
     def home():

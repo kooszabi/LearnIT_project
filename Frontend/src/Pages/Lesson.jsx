@@ -83,6 +83,7 @@ export function Lesson() {
                     <Quiz 
                         lessonQuestions={lessonQuestions}
                         lessonCodingExercises={lessonCodingExercises}
+                        lessonId={lessonId}
                     />
 
                 </div>

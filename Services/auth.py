@@ -83,10 +83,30 @@ def google_login():
         db.session.add(auth_provider)
         db.session.commit()
 
-        return jsonify({'message': 'Auth provider linked to existing user'}), 201
+        return jsonify({
+            'message': 'Auth provider linked to existing user',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'created_at': user.created_at,
+                'provider_user_id': provider_user_id,
+                'provider_name': auth_provider.provider_name
+            }
+        }), 201
     
     else:
-        return jsonify({'message': 'User already exists'}), 200
+        return jsonify({
+            'message': 'User already exists',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'created_at': user.created_at,
+                'provider_user_id': provider_user_id,
+                'provider_name': auth_provider.provider_name
+            }
+        }), 200
 
     """ token = request.json.get('token')
     if not token:
@@ -212,7 +232,6 @@ def github_login():
     primary_email = next((e["email"] for e in user_email_data if e["primary"]), None)
     # print('primary_email: ', primary_email)
 
-
     user = User.query.filter_by(email=primary_email).first()
     auth_provider = AuthProvider.query.filter_by(provider_user_id=provider_user_id).first()
 
@@ -258,8 +277,28 @@ def github_login():
         db.session.add(auth_provider)
         db.session.commit()
 
-        return jsonify({'message': 'Auth provider linked to existing user'}), 201
+        return jsonify({
+            'message': 'Auth provider linked to existing user',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'created_at': user.created_at,
+                'proivider_user_id': provider_user_id,
+                'provider_name': auth_provider.provider_name
+            }
+        }), 201
 
     else:
-        return jsonify({'message': 'User already exists'}), 200
+        return jsonify({
+            'message': 'User already exists',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'created_at': user.created_at,
+                'proivider_user_id': provider_user_id,
+                'provider_name': auth_provider.provider_name
+            }
+        }), 200
 

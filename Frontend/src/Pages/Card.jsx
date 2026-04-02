@@ -7,13 +7,16 @@ export function Card(props) {
     const [lessonTitle, setLessonTitle] = useState(null);
     const [questionNumber, setQuestionNumber] = useState(null);
     const [codingExerciseNumber, setCodingExerciseNumber] = useState(null);
+    const [userScore, setUserScore] = useState(0);
+    const email = localStorage.getItem("email");
     const navigate = useNavigate();
     useEffect(() => {
         // Fetch the lesson data based on the provided lessonId
             axios.post(
                 "http://localhost:5000/api/cards/card",
                 {
-                    lessonId: props.lessonId
+                    lessonId: props.lessonId,
+                    email: email
                 }
             )
             .then(res => {
@@ -21,11 +24,12 @@ export function Card(props) {
                 setLessonTitle(res.data.lessonTitle);
                 setQuestionNumber(res.data.questionNumber);
                 setCodingExerciseNumber(res.data.codingExerciseNumber);
+                setUserScore(res.data.score);
             })
             .catch(err => {
                 console.log("Error fetching card data: ", err.response?.data);
             });
-        }, [props.lessonId]);
+        }, [props.lessonId, email]);
 
     return (
         <>
@@ -41,8 +45,8 @@ export function Card(props) {
                 </div>
                 <div className="card-progress-container">
                     <p className="card-progress-paragraph">Score</p>
-                    <progress className="card-progress" max={100} value={76} />
-                    <p className="card-progress-percent">76%</p>
+                    <progress className="card-progress" max={100} value={userScore} />
+                    <p className="card-progress-percent">{userScore}%</p>
                 </div>
                 <div className="card-button-container">
                     <p className="card-button-paragraph">

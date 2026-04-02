@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CodeEditor } from '../CodeEditor';
 import { useNavigate } from "react-router-dom"; 
 import './Quiz.css';
+import axios from "axios";
 
 export function Quiz(props) {
     const navigate = useNavigate();
@@ -22,6 +23,9 @@ export function Quiz(props) {
     const [points, setPoints] = useState(0);
     const [hasTried, setHasTried] = useState(false);
     const number = lessonQuestions.length + codingExercises.length;
+
+    const email = localStorage.getItem("email");
+    /* console.log("EMAIL", email); */
 
     const checkAns = (qo) => {
         if (!lock) {
@@ -68,6 +72,23 @@ export function Quiz(props) {
         }
     }
 
+    async function sendScoreToBackEnd() {
+        // Fetch the lesson data based on the provided lessonId
+        try {
+            const res = await axios.post(
+                "http://localhost:5000/api/progresses/progress",
+                {
+                    lessonId: props.lessonId,
+                    score: points/number*100,
+                    email: email
+                }
+            );
+            console.log("api response: ", res.data);
+            navigate("/home");
+        } catch (err) {
+            console.log("Error: ", err.response?.data);
+        }
+    }
 
     return (
         <>
@@ -150,7 +171,8 @@ export function Quiz(props) {
                             <p className="result-text">No mistake! Congratulations</p>
                         )}     
 
-                        <button className="back-to-the-home-page-button" onClick={() => navigate("/home")}>Back to Learning</button>
+                        <button className="back-to-the-home-page-button" onClick={sendScoreToBackEnd}>
+                            Back to Learning</button>
                     </div>
                 </div>
             )}

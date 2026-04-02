@@ -8,6 +8,7 @@ export function Layout() {
 
     function handleLogout() {
         googleLogout();
+        localStorage.clear();
         navigate("/");
     }
 

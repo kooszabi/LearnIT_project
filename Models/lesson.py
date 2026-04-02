@@ -12,3 +12,4 @@ class Lesson(db.Model):
 
     questions = db.relationship('Question', backref='lesson', lazy=True, cascade="all, delete-orphan")
     coding_exercises = db.relationship('CodingExercise', backref='lesson', lazy=True, cascade="all, delete-orphan")
+    user_progress = db.relationship('UserProgress', backref='lesson', lazy=True, cascade="all, delete-orphan")

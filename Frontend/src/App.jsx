@@ -11,9 +11,10 @@ function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/lesson/:lessonId" element={<Lesson />} />
           <Route element={<Layout />} >
             <Route path="/home" element={<Home />} />
-            <Route path="/lesson/:lessonId" element={<Lesson />} />
+            {/* <Route path="/lesson/:lessonId" element={<Lesson />} /> */}
             <Route path="/python" element={<Python />} />
           </Route>
         </Routes>

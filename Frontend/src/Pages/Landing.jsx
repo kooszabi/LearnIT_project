@@ -34,6 +34,10 @@ export function Landing() {
             );
             console.log("Token sent to backend: ", credentialResponse.access_token);
             console.log(res.data);
+            if (res.data.user) {
+                localStorage.setItem("email", res.data.user.email);
+            }
+            console.log("email: ", res.data.user?.email);
             navigate("/home");
         } catch (err) {
             console.log("err: ", err.response?.data);
@@ -57,6 +61,10 @@ export function Landing() {
                             code: code
                         });
                     console.log("Token sent to backend:",res.data);
+                    if (res.data.user) {
+                        localStorage.setItem("email", res.data.user.email);
+                    }
+                    console.log("email: ", res.data.user?.email);
                     navigate("/home");
                 } catch (err) {
                     /* console.log('GitHub login failed: ', err.response?.data); */

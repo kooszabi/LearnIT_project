@@ -9,3 +9,4 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     auth_providers = db.relationship('AuthProvider', backref='user', lazy=True)
+    user_progress = db.relationship('UserProgress', backref='user', lazy=True, cascade="all, delete-orphan")
