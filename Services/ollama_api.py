@@ -16,7 +16,9 @@ def fix_coding_exercise():
 
     if not coding_exercise and not description:
         return jsonify({'error': 'No coding exercise and description received'}), 400
-        
+
+    print(f"\n\n received coding exercise: {coding_exercise} \n\n") 
+    print(f"\n\n received coding exercise description: {description} \n\n")
     try:
         res = requests.post("http://localhost:11434/api/generate",
                             json={
@@ -29,5 +31,5 @@ def fix_coding_exercise():
         print(f"\n\n res: {res.text} \n\n")
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    print(f"\n\n\n\n{res.json()}\n\n\n\n")
+    print(f"\n\n\n\napi response ollami : {res.json()}\n\n\n\n")
     return res.json()

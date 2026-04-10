@@ -1,7 +1,7 @@
 import Editor from '@monaco-editor/react'
 import React from 'react'
 import { useState } from 'react'
-import axios from 'axios';
+/* import axios from 'axios'; */
 import "./CodeEditor.css";
 
 export function CodeEditor(props) {
@@ -9,9 +9,13 @@ export function CodeEditor(props) {
         () => props.starter_code || ""
     );
 
-    
+    const handleChange = (value) => {
+        const code = value || "";
+        setStarterCode(code);
+        props.onCodeChange(code);
+    }
 
-    function CodingExerciseCorrection() {
+    /* function CodingExerciseCorrection() {
         axios.post(
             "http://localhost:5000/api/fix-codes/fix-code",
             {
@@ -29,22 +33,29 @@ export function CodeEditor(props) {
             console.log("No result received...", err.response?.data);
             } 
         )
-    }
+    } */
     
     return (
         <>
-            <Editor
+            <div className="code-editor-container">
+                <Editor
                 height="400px"
                 width="600px"
                 defaultLanguage="python"
                 value={starterCode}
-                onChange={value => setStarterCode(value || "")}
+                /* onChange={value => setStarterCode(value || "")} */
+                onChange={handleChange}
                 theme='vs-dark'
-            />
-{/*             <button onClick={() => console.log(starterCode)}>Próba</button> */}
-            <button className="submit-button" onClick={CodingExerciseCorrection}>
-                <img className="submit-arrow" src='/images/component_icons/icons8-submit-progress-50.png' />
-                Submit</button>
+                />
+                {/* <div className="code-editor-submit-button">
+                    <button className="submit-button" onClick={CodingExerciseCorrection}>
+                        <img className="submit-arrow" src='/images/component_icons/icons8-submit-progress-50.png' />
+                        Submit
+                    </button>
+                </div> */}
+                
+            </div>
+            
         </>
         
     )
