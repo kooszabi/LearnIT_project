@@ -210,16 +210,16 @@ export function Quiz(props) {
                             <p className="result-percent">{points === 0 ? "0%" : points/number*100+"%"}</p>
                             <p className="result-points">{points} out of {number}</p>
                             {points/number*100 <= 50 && (
-                            <p className="result-text">Don't worry, you'll get it better next time!</p>
+                            <p className="result-text-50">Don't worry, you'll get it better next time!</p>
                             )}
                             {points/number*100 > 50 && points/number*100 < 80 && (
-                                <p className="result-text">Good job!</p>
+                                <p className="result-text-80">Good job!</p>
                             )}
                             {points/number*100 >= 80 && points/number*100 < 100 && (
-                                <p className="result-text">Great work!</p>
+                                <p className="result-text-99">Great work!</p>
                             )}
                             {points/number*100 === 100 && (
-                                <p className="result-text">No mistake! Congratulations</p>
+                                <p className="result-text-100">No mistake! Congratulations</p>
                             )}     
 
                         <button className="back-to-the-home-page-button" onClick={sendScoreToBackEnd}>

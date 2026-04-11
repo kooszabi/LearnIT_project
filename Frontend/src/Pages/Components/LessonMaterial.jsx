@@ -20,7 +20,7 @@ export function LessonMaterial(props) {
                         case "example":
                             return (
                                 <div className="example-div">
-                                    <pre className="example" key={block.id}><code>{block.value}</code></pre>
+                                    <pre className="example" key={block.id}><code className="example-content">{block.value}</code></pre>
                                 </div>
                                 )
                         case "note":
