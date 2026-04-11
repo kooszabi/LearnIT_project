@@ -103,7 +103,7 @@ export function Landing() {
                                 Welcome to LearnIT
                             </h2>
                             <p className="hero-paragraph">
-                                Learn the basics of Python and start coding with confidence.
+                                Learn the basics of Programming and start coding with confidence.
                             </p>
                             <button className="hero-button" onClick={() => document.getElementById("sign_up").scrollIntoView({behavior: "smooth"})}>
                                 Join now
