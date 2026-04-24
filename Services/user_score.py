@@ -4,7 +4,27 @@ from flask import Blueprint, request, jsonify
 from extensions import db
 import Services.auth as auth
 from sqlalchemy import update
+import jwt
+import os
+from Services.get_user_id import get_user_id_from_token
+
 user_progress_bp = Blueprint('progress', __name__)
+""" SECRET_KEY = os.getenv("SECRET_KEY") """
+
+""" def get_user_id_from_token(req):
+    auth_header = req.headers.get("Authorization")
+
+    if not auth_header:
+        return None
+    
+    try:
+        token = auth_header.split(" ")[1]
+        decoded = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        return decoded["user_id"]
+    except Exception as e:
+        return None """
+    
+
 
 @user_progress_bp.route('/progress', methods=['POST'])
 def user_progress():
@@ -23,16 +43,17 @@ def user_progress():
 
     if not score:
         return jsonify({'error': 'No score received'}), 400
-    
-    email = data.get('email')
+    try:
+        user_id = get_user_id_from_token(request)
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Expired token"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Expired token"}), 401
+    except Exception as e:
+        return jsonify({"error": "Expired token"}), 401
+    if not user_id:
+        return jsonify({'error': str(e)}), 401
 
-    if not email:
-        return jsonify({'error': 'No email received'}), 400
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify({'error': 'No user_id received'}), 400
-
-    user_id = user.id
     progress = UserProgress.query.filter_by(user_id=user_id).filter_by(lesson_id=lesson_id).first()
 
     if not progress:

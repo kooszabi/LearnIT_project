@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios';
+/* import axios from 'axios'; */
+import api from "../api/axios"
 import './Card.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,19 +9,18 @@ export function Card(props) {
     const [questionNumber, setQuestionNumber] = useState(null);
     const [codingExerciseNumber, setCodingExerciseNumber] = useState(null);
     const [userScore, setUserScore] = useState(0);
-    const email = localStorage.getItem("email");
     const navigate = useNavigate();
     useEffect(() => {
         // Fetch the lesson data based on the provided lessonId
-            axios.post(
+            console.log("lessonId", props.lessonId);
+            api.post(
                 "http://localhost:5000/api/cards/card",
                 {
-                    lessonId: props.lessonId,
-                    email: email
+                    lessonId: props.lessonId
                 }
             )
             .then(res => {
-                console.log("api/card/card response: ", res.data);
+                console.log("api/cards/card response: ", res.data);
                 setLessonTitle(res.data.lessonTitle);
                 setQuestionNumber(res.data.questionNumber);
                 setCodingExerciseNumber(res.data.codingExerciseNumber);
@@ -29,7 +29,7 @@ export function Card(props) {
             .catch(err => {
                 console.log("Error fetching card data: ", err.response?.data);
             });
-        }, [props.lessonId, email]);
+        }, [props.lessonId]);
 
     return (
         <>

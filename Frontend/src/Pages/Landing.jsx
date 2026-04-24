@@ -1,7 +1,8 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
+/* import axios from "axios"; */
+import api from "../api/axios"
 import { useGitHubLogin } from "@react-oauth/github";
 import "./Landing.css";
 export function Landing() {
@@ -26,7 +27,7 @@ export function Landing() {
     onSuccess: async (credentialResponse) => {
         try {
             console.log("Google login successful! ", credentialResponse);
-            const res = await axios.post(
+            const res = await api.post(
                 "http://localhost:5000/api/auth/google",
                 {
                     token: credentialResponse.access_token
@@ -34,8 +35,11 @@ export function Landing() {
             );
             console.log("Token sent to backend: ", credentialResponse.access_token);
             console.log(res.data);
-            if (res.data.user) {
+            /* if (res.data.user) {
                 localStorage.setItem("email", res.data.user.email);
+            } */
+            if (res.data.token) {
+                localStorage.setItem("token", res.data.token);
             }
             console.log("email: ", res.data.user?.email);
             navigate("/home");
@@ -56,13 +60,16 @@ export function Landing() {
                     console.log('GitHub login successful!', response);
                     console.log('Authorization code: ', response.code);
                     const code = response.code;
-                    const res = await axios.post("http://localhost:5000/api/auth/github",
+                    const res = await api.post("http://localhost:5000/api/auth/github",
                         {
                             code: code
                         });
                     console.log("Token sent to backend:",res.data);
-                    if (res.data.user) {
+                    /* if (res.data.user) {
                         localStorage.setItem("email", res.data.user.email);
+                    } */
+                    if (res.data.token) {
+                        localStorage.setItem("token", res.data.token);
                     }
                     console.log("email: ", res.data.user?.email);
                     navigate("/home");

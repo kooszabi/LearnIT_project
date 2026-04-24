@@ -8,10 +8,21 @@ import os
 # from google.auth.transport import requests as google_requests
 # from flask_cors import cross_origin
 import requests as github_requests
+import jwt
+from datetime import datetime, timedelta
 
 auth_bp = Blueprint('auth', __name__)
 
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+def create_token(user):
+    payload = {
+        "user_id": user.id,
+        "exp": datetime.utcnow() + timedelta(minutes=60)
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
 
 @auth_bp.route('/google', methods=['POST'])
 def google_login():
@@ -50,6 +61,7 @@ def google_login():
         )
         db.session.add(user)
         db.session.commit()
+        
 
         user = User.query.filter_by(email=email).first()
         auth_provider = AuthProvider(
@@ -61,7 +73,10 @@ def google_login():
         db.session.add(auth_provider)
         db.session.commit()
 
+        token = create_token(user)
+        
         return jsonify({
+            'token': token,
             'message': 'User created with google auth',
             'user': {
                 'id': user.id,
@@ -83,7 +98,10 @@ def google_login():
         db.session.add(auth_provider)
         db.session.commit()
 
+        token = create_token(user)
+
         return jsonify({
+            'token': token,
             'message': 'Auth provider linked to existing user',
             'user': {
                 'id': user.id,
@@ -96,7 +114,10 @@ def google_login():
         }), 201
     
     else:
+        token = create_token(user)
+
         return jsonify({
+            'token': token,
             'message': 'User already exists',
             'user': {
                 'id': user.id,
@@ -234,7 +255,7 @@ def github_login():
 
     user = User.query.filter_by(email=primary_email).first()
     auth_provider = AuthProvider.query.filter_by(provider_user_id=provider_user_id).first()
-
+    
     if not user and not auth_provider:
         user = User(
             username = username,
@@ -254,7 +275,10 @@ def github_login():
         db.session.add(auth_provider)
         db.session.commit()
 
+        token = create_token(user)
+
         return jsonify({
+            'token': token,
             'message': 'User created with github auth',
             'user': {
                 'id': user.id,
@@ -277,7 +301,10 @@ def github_login():
         db.session.add(auth_provider)
         db.session.commit()
 
+        token = create_token(user)
+
         return jsonify({
+            'token': token,
             'message': 'Auth provider linked to existing user',
             'user': {
                 'id': user.id,
@@ -290,7 +317,10 @@ def github_login():
         }), 201
 
     else:
+        token = create_token(user)
+
         return jsonify({
+            'token': token,
             'message': 'User already exists',
             'user': {
                 'id': user.id,
@@ -301,4 +331,3 @@ def github_login():
                 'provider_name': auth_provider.provider_name
             }
         }), 200
-

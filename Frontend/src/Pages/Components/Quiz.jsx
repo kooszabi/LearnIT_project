@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { CodeEditor } from '../CodeEditor';
 import { useNavigate } from "react-router-dom"; 
 import './Quiz.css';
-import axios from "axios";
+/* import axios from "axios"; */
+import api from "../../api/axios";
 
 export function Quiz(props) {
     const navigate = useNavigate();
@@ -24,8 +25,6 @@ export function Quiz(props) {
     const [hasTried, setHasTried] = useState(false);
     const number = lessonQuestions.length + codingExercises.length;
 
-    const email = localStorage.getItem("email");
-    /* console.log("EMAIL", email); */
     const [progress, setProgress] = useState(1);
 
     /* const [apiResponseResult, setApiResponseResult] = useState(null); */
@@ -81,12 +80,11 @@ export function Quiz(props) {
     async function sendScoreToBackEnd() {
         // Fetch the lesson data based on the provided lessonId
         try {
-            const res = await axios.post(
+            const res = await api.post(
                 "http://localhost:5000/api/progresses/progress",
                 {
                     lessonId: props.lessonId,
-                    score: points/number*100,
-                    email: email
+                    score: points/number*100
                 }
             );
             console.log("api response: ", res.data);
@@ -98,7 +96,7 @@ export function Quiz(props) {
 
     async function CodingExerciseCorrection() {
         try {
-            const res = await axios.post(
+            const res = await api.post(
                 "http://localhost:5000/api/fix-codes/fix-code",
                 {
                     "description": codingExercise.description,

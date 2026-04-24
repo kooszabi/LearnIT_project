@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios';
+/* import axios from 'axios'; */
+import api from "../api/axios"
 import { useParams } from 'react-router-dom';
 /* import { CodeEditor } from './CodeEditor'; */
 import { Quiz } from './Components/Quiz';
@@ -17,7 +18,7 @@ export function Lesson() {
 
     useEffect(() => {
         // Fetch the lesson data based on the provided lessonId
-        axios.get(
+        api.get(
             `http://localhost:5000/api/lessons/${lessonId}`
         )
         .then(res => {
@@ -33,7 +34,7 @@ export function Lesson() {
     }, [lessonId]);
 
     useEffect(() => {
-        axios.post(
+        api.post(
             "http://localhost:5000/api/questions/question",
             {
                 lesson_id: lessonId
@@ -49,7 +50,7 @@ export function Lesson() {
     }, [lessonId]);
 
     useEffect(() => {
-        axios.post(
+        api.post(
             "http://localhost:5000/api/coding-exercises/coding-exercise",
             {
                 lesson_id: lessonId
