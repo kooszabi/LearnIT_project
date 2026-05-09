@@ -23,7 +23,18 @@ def fix_coding_exercise():
         res = requests.post("http://localhost:11434/api/generate",
                             json={
                                 "model": "llama3",
-                                "prompt": f"Give back only the word: true or false, whether the solution is correct according to the description. \
+                                "prompt": f"You are a strict programming examiner. \
+                                    Rules: \
+                                        - The solution is correct only if: \
+                                            1. the logic is correct \
+                                            2. all required variable names exactly match the specification \
+                                            3. variable names are case-sensitive \
+                                            4. different variable names are considered errors even if the logic works \
+                                            5. function names must also exactly match \
+                                    Output rules: \
+                                        - Return only the word 'true' if everything is perfectly correct. \
+                                        - Otherwise return the word 'false' and a short, 1 sentence explanation strictly about the mistake, nothing else. For that use the \
+                                            format: false ; explanation \
                                     Description: {description} \
                                     Coding exercise: {coding_exercise}",
                                 "stream": False
