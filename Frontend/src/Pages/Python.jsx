@@ -12,8 +12,8 @@ export function Python() {
                 </div>
                 <div className="variable-content-container">
                     <Card key={1} lessonId={1}/>
-                    <Card key={2} lessonId={1}/>
-                    <Card key={3} lessonId={1}/>
+                    <Card key={2} lessonId={2}/>
+
                 </div>
                 
                 <div className="variable-title-container">
@@ -21,11 +21,9 @@ export function Python() {
                     <div className="variable-title-hline"/>
                 </div>
                 <div className="variable-content-container">
-                    <Card key={4} lessonId={1}/>
-                    <Card key={5} lessonId={1}/>
-                    <Card key={6} lessonId={1}/>
-                    <Card key={7} lessonId={1}/>
-                    <Card key={8} lessonId={1}/>
+                    <Card key={3} lessonId={3}/>
+                    <Card key={4} lessonId={4}/>
+
                 </div>
             </div>
             

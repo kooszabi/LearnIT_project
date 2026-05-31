@@ -5,7 +5,9 @@
     flex-direction: column;
     overflow-y: auto;
     gap: 10px;
-    padding: auto;
+    padding: 20px 0px;
+    width: 100%;
+/*     align-items: center; */
 }
 
 .variable-title-container {

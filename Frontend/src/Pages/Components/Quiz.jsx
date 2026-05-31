@@ -9,6 +9,7 @@ export function Quiz(props) {
     const navigate = useNavigate();
 
     const lessonQuestions = props.lessonQuestions;
+    console.log("lessonQuestions: ", lessonQuestions);
     const codingExercises = props.lessonCodingExercises;
 
     const [index, setIndex] = useState(0);
@@ -103,7 +104,7 @@ export function Quiz(props) {
                 "http://localhost:5000/api/progresses/progress",
                 {
                     lessonId: props.lessonId,
-                    score: points / number * 100
+                    score: (points / number * 100).toFixed(2)
                 }
             );
             console.log("api response: ", res.data);
@@ -267,7 +268,7 @@ export function Quiz(props) {
                     <div className="result-container">
                         <div className="result-div">
                             <img className="result-image" src="/images/component_icons/icons8-trophy-96.png" />
-                            <p className="result-percent">{points === 0 ? "0%" : points / number * 100 + "%"}</p>
+                            <p className="result-percent">{points === 0 ? "0%" : (points / number * 100).toFixed(2) + "%"}</p>
                             <p className="result-points">{points} out of {number}</p>
                             {points / number * 100 <= 50 && (
                                 <p className="result-text-50">Don't worry, you'll get it better next time!</p>
