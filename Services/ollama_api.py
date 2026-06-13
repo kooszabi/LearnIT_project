@@ -26,11 +26,16 @@ def fix_coding_exercise():
                                 "prompt": f"You are a strict programming examiner. \
                                     Rules: \
                                         - The solution is correct only if: \
-                                            1. the logic is correct \
-                                            2. all required variable names exactly match the specification \
-                                            3. variable names are case-sensitive \
-                                            4. different variable names are considered errors even if the logic works \
-                                            5. function names must also exactly match \
+                                            Evaluation rules: \
+                                                1. Check whether the student's code satisfies the task description. \
+                                                2. Variable names are case-sensitive and must exactly match the names required by the description. \
+                                                3. Function names are case-sensitive and must exactly match the required names. \
+                                                4. String values such as \"warm\", \"cloudy\", \"rainy\", etc. are NOT variable names. \
+                                                5. Only report a variable name error if the student actually used a different variable name. \
+                                                6. Do not invent requirements that are not present in the description. \
+                                                7. Accept different valid implementations if they satisfy the task. \
+                                                8. Check whether the required programming concept is used (for example: if-else, nested if, if-elif-else, not operator, etc.). \
+                                                9. Check whether the code would produce the expected behavior. \
                                     Output rules: \
                                         - Return only the word 'true' if everything is perfectly correct. \
                                         - Otherwise return the word 'false' and a short, 1 sentence explanation strictly about the mistake, nothing else. For that use the \

@@ -25,6 +25,27 @@ export function Python() {
                     <Card key={4} lessonId={4}/>
 
                 </div>
+
+                <div className="variable-title-container">
+                    <h2 className="variable-title">Conditions</h2>
+                    <div className="variable-title-hline"/>
+                </div>
+                <div className="variable-content-container">
+                    <Card key={5} lessonId={5}/>
+                    <Card key={6} lessonId={6}/>
+
+                </div>
+
+                <div className="variable-title-container">
+                    <h2 className="variable-title">Lists, Tuples, Sets and Dictionaries</h2>
+                    <div className="variable-title-hline"/>
+                </div>
+                <div className="variable-content-container">
+                    <Card key={7} lessonId={7}/>
+                    {/* <Card key={8} lessonId={8}/>
+                    <Card key={9} lessonId={9}/> */}
+
+                </div>
             </div>
             
         </>

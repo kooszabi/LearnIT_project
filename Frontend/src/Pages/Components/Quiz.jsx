@@ -147,7 +147,7 @@ export function Quiz(props) {
                         <p className="progress-number">{progress} out of {number}</p>
                     </div>
 
-                    <h2 id={question.id}>
+                    <h2 id={question.id} style={{ whiteSpace:"pre-line" }}>
                         {question.text}
                     </h2>
                     <ul>
