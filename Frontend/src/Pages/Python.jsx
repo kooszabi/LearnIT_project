@@ -42,8 +42,38 @@ export function Python() {
                 </div>
                 <div className="variable-content-container">
                     <Card key={7} lessonId={7}/>
-                    {/* <Card key={8} lessonId={8}/>
-                    <Card key={9} lessonId={9}/> */}
+                    <Card key={8} lessonId={8}/>
+                    <Card key={9} lessonId={9}/>
+                    <Card key={10} lessonId={10}/>
+
+                </div>
+
+                <div className="variable-title-container">
+                    <h2 className="variable-title">Loops</h2>
+                    <div className="variable-title-hline"/>
+                </div>
+                <div className="variable-content-container">
+                    <Card key={11} lessonId={11}/>
+                    <Card key={12} lessonId={12}/>
+
+                </div>
+
+                <div className="variable-title-container">
+                    <h2 className="variable-title">Functions</h2>
+                    <div className="variable-title-hline"/>
+                </div>
+                <div className="variable-content-container">
+                    <Card key={13} lessonId={13}/>
+                    <Card key={14} lessonId={14}/>
+
+                </div>
+
+                <div className="variable-title-container">
+                    <h2 className="variable-title">Error Handling</h2>
+                    <div className="variable-title-hline"/>
+                </div>
+                <div className="variable-content-container">
+                    <Card key={15} lessonId={15}/>
 
                 </div>
             </div>

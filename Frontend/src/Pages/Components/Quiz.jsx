@@ -147,7 +147,7 @@ export function Quiz(props) {
                         <p className="progress-number">{progress} out of {number}</p>
                     </div>
 
-                    <h2 id={question.id} style={{ whiteSpace:"pre-line" }}>
+                    <h2 id={question.id} style={{ whiteSpace:"pre-wrap" }}>
                         {question.text}
                     </h2>
                     <ul>
@@ -192,7 +192,7 @@ export function Quiz(props) {
                     </div>
 
                     <h2 className="coding-exercise-title">{codingExercise.title}</h2>
-                    <p className="coding-exercise-description">{codingExercise.description}</p>
+                    <p className="coding-exercise-description" style={{ whiteSpace:"pre-wrap" }}>{codingExercise.description}</p>
                     <div className="coding-exercise-editor">
                         <CodeEditor
                             key={codingExercise.id}

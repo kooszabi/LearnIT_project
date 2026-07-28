@@ -37,6 +37,7 @@ export function Layout() {
                         <li><a href="/home#/python"><img src="/images/home_icons/icons8-python-96.png"/>Python</a></li>
                         <li><a><img src="/images/home_icons/icons8-c-sharp-logo-2-96.png"/>C#</a></li>
                         <li><a><img src="/images/home_icons/icons8-java-96.png"/>Java</a></li>
+                        <li><a href="/home#/statistics"><img src="\images\home_icons\icons8-statistics-100.png"/>Statistics</a></li>
                         <li><a>...</a></li>
                         <li onClick={handleLogout}><a><img src="/images/home_icons/icons8-power-off-button-100.png"/>Log Out</a></li>
                     </ul>
@@ -48,6 +49,7 @@ export function Layout() {
                         <li title="Python"><a href="/home#/python"><img src="/images/home_icons/icons8-python-96.png"/></a></li>
                         <li title="C#"><a><img src="/images/home_icons/icons8-c-sharp-logo-2-96.png"/></a></li>
                         <li title="Java"><a><img src="/images/home_icons/icons8-java-96.png"/></a></li>
+                        <li title="Statistics"><a href="/home#/statistics"><img src="\images\home_icons\icons8-statistics-100.png"/></a></li>
                         <li title=""><a>...</a></li>
                         <li onClick={handleLogout}><a><img src="/images/home_icons/icons8-power-off-button-100.png"/></a></li>
                     </ul>

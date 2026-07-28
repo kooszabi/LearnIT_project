@@ -5,6 +5,7 @@ import { Landing } from './Pages/Landing'
 import { Home } from './Pages/Home'
 import { Lesson } from './Pages/Lesson'
 import { Python } from './Pages/Python'
+import { Statistics } from './Pages/Statistics'
 function App() {
   
     return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/home" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
             {/* <Route path="/lesson/:lessonId" element={<Lesson />} /> */}
             <Route path="/python" element={<ProtectedRoute> <Python /> </ProtectedRoute>} />
+            <Route path="/statistics" element={<ProtectedRoute> <Statistics /> </ProtectedRoute>} />
           </Route>
         </Routes>
       </HashRouter>
