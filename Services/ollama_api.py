@@ -36,6 +36,8 @@ def fix_coding_exercise():
                                                 7. Accept different valid implementations if they satisfy the task. \
                                                 8. Check whether the required programming concept is used (for example: if-else, nested if, if-elif-else, not operator, etc.). \
                                                 9. Check whether the code would produce the expected behavior. \
+                                                10. Do not require as e unless the exercise explicitly asks the student to access or print the exception object. \
+                                                11. Evaluate the student's solution using only the task description provided. Do not compare the solution to common programming exercises, online examples, tutorials, or assumed reference solutions. The task description is the only source of truth. \
                                     Output rules: \
                                         - Return only the word 'true' if everything is perfectly correct. \
                                         - Otherwise return the word 'false' and a short, 1 sentence explanation strictly about the mistake, nothing else. For that use the \
