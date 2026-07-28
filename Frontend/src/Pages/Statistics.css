@@ -1,0 +1,18 @@
+h1 {
+    color: aliceblue;
+}
+
+.statistics-container {
+    display: flex;
+    flex-direction: column;
+    /* background-color: #2d2e2f; */
+    background-color: #f8f9fa;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.overall_statistics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
