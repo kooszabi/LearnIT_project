@@ -11,10 +11,10 @@ export function LessonProgressCard(props) {
     const image = props.image_url;
     /* const data = [
         {name: 'Completed', value: completedLessons, fill: "#4CAF50"},
-        {name: 'Not Completed', value: remainingLessons, fill: "#E0E0E0"}
+        {name: 'Not Completed', value: remainingLessons, fill: "#2563EB"}
     ]; */
     const data = [
-        {name: 'Completed', value: completedLessons, fill: "#2563EB"},
+        {name: 'Completed', value: completedLessons, fill: "#4CAF50"},
         {name: 'Not Completed', value: remainingLessons, fill: "#E5E7EB"}
     ];
 

@@ -14,6 +14,7 @@
 
 .lesson-progress-card:hover {
     transform:translateY(5px);
+    /* transition: .2s; */
     border-bottom: 3px solid #e5e5e5;
 }
 
@@ -102,7 +103,7 @@
 .completed-color {
     height: 16px;
     width: 16px;
-    background-color: #2563EB;
+    background-color: #4CAF50;
     border-radius: 50%;
 }
 

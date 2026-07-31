@@ -70,7 +70,7 @@ def get_statistics():
             "completed_topic_lesson": completed_topic_lesson,
             "topic_progress": round(topic_progress, 2)
         })
-        print(f"Topics progress list: {topics_progress_list}\n\n\n")
+        print(f"\n\n\nTopics progress list: {topics_progress_list}\n\n\n")
 
     # best and worst topics
     topic_average_score = []
