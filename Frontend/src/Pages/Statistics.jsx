@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import api from "../api/axios";
 import { LessonProgressCard } from './Components/LessonProgressCard';
 import { LessonProgressBar } from './Components/LessonProgressBar';
+import { useNavigate } from 'react-router-dom';
 
 export function Statistics() {
     // username
@@ -29,6 +30,10 @@ export function Statistics() {
     const [bestTopicResult, setBestTopicResult] = useState([]);
     // worst topic result
     const [worstTopicResult, setWorstTopicResult] = useState([]);
+    // navigate
+    const navigate = useNavigate();
+
+
 
     useEffect(() => {
         api.get(
@@ -90,7 +95,7 @@ export function Statistics() {
     if (!topicProgressList) return <p>Loading the statistics...</p>
     return (
         <div className='statistics-container'>
-            <h1>Welcome back, {username}</h1>
+            <h1 className='welcome-back-username'>Welcome back, {username}</h1>
             <div className='overall_statistics'>
                 
                 <LessonProgressCard 
@@ -175,13 +180,9 @@ export function Statistics() {
                                 )
                             })}
 
-                            {bestTopicResult.map(best => {
-                                return (
-                                    <span className='best-topic-result'>
-                                        {best.topic_result}%
-                                    </span>
-                                )
-                            })}
+                            <span className='best-topic-result'>
+                                {averageBestWidth()}%
+                            </span>
 
                         </div>
 
@@ -220,19 +221,20 @@ export function Statistics() {
 
                             {worstTopicResult.map(worst => {
                                 return (
-                                    <span className='best-topic-name'>
-                                        {worst.topic_name}
-                                    </span>
+                                    <>
+                                        <span className='best-topic-name'>
+                                            {worst.topic_name}
+                                        </span>
+                                        <button className='practice-with-ai-button' onClick={() => navigate(`/learn-with-ai/${worst.topic_id}`)}>Practice with AI</button>
+                                    </>
                                 )
                             })}
 
-                            {worstTopicResult.map(worst => {
-                                return (
-                                    <span className='worst-topic-result'>
-                                        {worst.topic_result}%
-                                    </span>
-                                )
-                            })}
+
+                            <span className='worst-topic-result'>
+                                {averageWorstWidth()}%
+                            </span>
+
 
                         </div>
 

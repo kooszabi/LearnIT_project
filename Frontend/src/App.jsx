@@ -6,6 +6,7 @@ import { Home } from './Pages/Home'
 import { Lesson } from './Pages/Lesson'
 import { Python } from './Pages/Python'
 import { Statistics } from './Pages/Statistics'
+import { LearnWithAI } from './Pages/LearnWithAI'
 function App() {
   
     return (
@@ -19,6 +20,7 @@ function App() {
             {/* <Route path="/lesson/:lessonId" element={<Lesson />} /> */}
             <Route path="/python" element={<ProtectedRoute> <Python /> </ProtectedRoute>} />
             <Route path="/statistics" element={<ProtectedRoute> <Statistics /> </ProtectedRoute>} />
+            <Route path="/learn-with-ai/:topicId" element={ <ProtectedRoute> <LearnWithAI /> </ProtectedRoute> } />
           </Route>
         </Routes>
       </HashRouter>
