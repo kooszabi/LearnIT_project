@@ -24,7 +24,11 @@
 
 .cards-container {
     display: flex;
-    margin: 30px auto;
+    /* margin: 30px auto; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 160px;
     gap: 40px;
     max-width: 100%;
 }
@@ -113,3 +117,228 @@
     font-weight: 700;
 }
 
+.flash-cards-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+    max-width: 100%;
+    max-height: 80%;
+    margin-bottom: 100px;
+}
+
+.flash-cards-loader-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    visibility:visible;
+}
+
+.flash-cards-loader-object-container {
+    display: flex;
+    gap: 3px;
+}
+
+.flash-cards-loader-object {
+    width: 18px;
+    height: 120px;
+    background-color: #212529;
+    border-radius: 10px;
+    animation: loading 0.8s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform: scaleY(0);
+    }
+    50% {
+        transform: scaleY(100%);
+    }
+    100% {
+        transform: scaleY(0);
+    }
+}
+.flash-cards-loader-object:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.flash-cards-loader-object:nth-child(3) {
+    animation-delay: 0.2s;
+}
+.flash-cards-loader-object:nth-child(4) {
+    animation-delay: 0.3s;
+}
+.flash-cards-loader-object:nth-child(5) {
+    animation-delay: 0.4s;
+}.flash-cards-loader-object:nth-child(6) {
+    animation-delay: 0.5s;
+}
+.flash-cards-loader-object:nth-child(7) {
+    animation-delay: 0.6s;
+}
+.flash-cards-loader-object:nth-child(8) {
+    animation-delay: 0.7s;
+}
+
+.flash-cards-loader-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 22px;
+    color: #212529;
+
+}
+
+.something-went-wrong {
+    font-family: 'Lato', sans-serif;
+    font-size: 22px;
+    color: #212529;
+}
+
+.flash-cards {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 850px;
+    height: 450px;
+    border-radius: 16px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #594ae2;
+}
+
+.flash-cards-title-container {
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.flash-cards-container-hline {
+    width: 90%;
+    height: 4px;
+    background-color:#212529;
+    border-radius: 999px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 60px;
+    /* opacity: 0.5; */
+}
+
+.flash-cards-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 30px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.flash-cards-progress-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    justify-content: right;
+}
+
+.flash-cards-progress-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    text-align: left;
+    color: #594ae2;
+    font-weight: bold;
+}
+
+.flash-cards-progress-bar {
+    height: 12px;
+    width: 200px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 10px;
+}
+
+.flash-cards-progress-bar::-webkit-progress-bar {
+    background-color:#f8f9fa;
+    border-radius: 10px;
+}
+
+.flash-cards-progress-bar::-webkit-progress-value {
+    background-color: #594ae2;
+    border-radius: 10px;
+}
+
+
+.flash-card-front-or-back-text-container {
+    display: flex;
+    align-items:start;
+    width: 100%;
+    max-width: fit-content;
+    margin-left: 10px;
+    margin-right: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background-color: #e5e3fc;
+    padding: 4px 6px;
+}
+
+.flash-cards-front-or-back-text {
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+    color:#594ae2;
+    font-weight: bold;
+}
+
+.flash-cards-image {
+    margin-bottom: 45px;
+}
+
+.flash-cards-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 30px;
+    text-align: center;
+
+}
+
+.flash-cards-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 1250px;
+}
+
+.flash-cards-button-previous {
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #e5e5e5;
+    padding: 15px 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    color: var(--font-color);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.flash-cards-button-flip {
+    border-radius: 8px;
+    background-color:#594ae2;
+    padding: 15px 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    color:#f8f9fa;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.flash-cards-button-images {
+    width: 20px;
+}

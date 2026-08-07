@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/axios"
 import './LearnWithAI.css'
@@ -11,12 +11,18 @@ export function LearnWithAI() {
     const [isLearningQuiz, setIsLearningQuiz] = useState(false);
     const [flashCardsIndex, setFlashCardsIndex] = useState(0);
 
-    //test flashcards mechanics
-
+    //generating flashcards/quizzes
+    const [isGenerating, setIsGenerating] = useState(false);
+    //if something goes wrong
+    const [somethingWentWrong, setSomethingWentWrong] = useState(false);
     // false = question, true = answer;
     const [flashCardsState, setFlashCardsState] = useState(false);
+    //flashcards progress variables
+    const [numberOfFlashCards, setNumberOfFlashCards] = useState(null);
+    const [progressNumber, setProgressNumber] = useState(1);
 
     function generateFlashCardsOnClick() {
+        setIsGenerating(true);
         api.post(
             `http://localhost:5000/api/notebooklm/generate-flashcards/${topicId}`
         )
@@ -25,9 +31,16 @@ export function LearnWithAI() {
             console.log(res.data.cards);
             setIsLearningFlashCards(true);
             setFlashCardsIndex(0);
+            setIsGenerating(false);
+            setNumberOfFlashCards(res.data.cards.length)
         })
         .catch( err => {
             console.log("Error fetching lesson data: ", err.response?.data);
+            setSomethingWentWrong(true);
+        })
+        .finally( () => {
+            setIsGenerating(false);
+            document.getElementById("flash_cards_container_id").scrollIntoView({behavior: "smooth"})
         })
     }
 
@@ -52,16 +65,19 @@ export function LearnWithAI() {
     function previousFlashCards() {
         setFlashCardsIndex(prev => prev - 1);
         setFlashCardsState(false);
+        setProgressNumber(prev => prev - 1);
     }
 
     function nextFlashCards() {
         if (flashCardsIndex === generatedFlashCards.length - 1) {
             setIsLearningFlashCards(false);
             setFlashCardsIndex(0);
+            setProgressNumber(1);
         }
         else {
             setFlashCardsIndex(prev => prev + 1);
             setFlashCardsState(false);
+            setProgressNumber(prev => prev + 1);
         }
     }
 
@@ -69,7 +85,8 @@ export function LearnWithAI() {
         return text
             .replace(/\$/g, "")
             .replace(/\\text\{([^}]*)\}/g, "$1")
-            .replace(/\\_/g, "_");
+            .replace(/\\_/g, "_")
+            .replace(/`/g, "");
     }
 
 
@@ -91,7 +108,7 @@ export function LearnWithAI() {
                         </div>
                     </div>
 
-                    <span className="cards-title">FlashCards</span>
+                    <span className="cards-title">Flashcards</span>
                     <span className="cards-description">Generate AI-powered flashcards to review key concepts, reinforce your understanding, and improve long-term memory through interactive learning.</span>
 
                     <div className="cards-button-container">
@@ -129,23 +146,77 @@ export function LearnWithAI() {
 
             </div>
 
+            {isGenerating && (
+                        <div className="flash-cards-loader-container">
+                            <div className="flash-cards-loader-object-container">
+                                <div className="flash-cards-loader-object" />
+                                <div className="flash-cards-loader-object" />
+                                <div className="flash-cards-loader-object" />
+                                <div className="flash-cards-loader-object" />
+                                <div className="flash-cards-loader-object" />
+                                <div className="flash-cards-loader-object" />
+                                <div className="flash-cards-loader-object" />
+                                <div className="flash-cards-loader-object" />
+                            </div>
+                            <div className="flash-cards-loader-text">
+                                AI is doing its Magic...
+                            </div>
+                        </div>
+            )}
+
             { isLearningFlashCards && (
                 <div className="flash-cards-container">
+
+                    <div className="flash-cards-container-hline" />
+
+                    <div id="flash_cards_container_id" className="flash-cards-title-container">
+                        <span className="flash-cards-title">
+                            Flashcards
+                        </span>
+                        <div className="flash-cards-progress-container">
+                            <span className="flash-cards-progress-text">
+                                {progressNumber}/{numberOfFlashCards}
+                            </span>
+                            <progress className="flash-cards-progress-bar" max={numberOfFlashCards} value={progressNumber} />
+                        </div>
+                    </div>
+
                     <div className="flash-cards">
+                        <div className="flash-card-front-or-back-text-container">
+                            <span className="flash-cards-front-or-back-text">
+                                {flashCardsState ? "Back" : "Front"}
+                            </span>
+                        </div>
+                        <img className="flash-cards-image" src="/images/learn_with_ai/icons8-brain-100.png" />
                         <span className="flash-cards-text">
                             {flashCardsState ? 
                                 cleanText(generatedFlashCards[flashCardsIndex].back) : cleanText(generatedFlashCards[flashCardsIndex].front)}
                         </span>
                     </div>
                     <div className="flash-cards-buttons-container">
-                        <button className="flash-cards-button-previous" disabled={flashCardsIndex === 0} onClick={() => previousFlashCards()}>Previous</button>
-                        <button className="flash-cards-button-flip" onClick={() => flipFlashCards()}>Flip</button>
-                        <button className="flash-cards-button-next" onClick={() => nextFlashCards()}>Next</button>
+                        <button className="flash-cards-button-previous" disabled={flashCardsIndex === 0} onClick={() => previousFlashCards()}>
+                            <img className="flash-cards-button-images" src="/images/learn_with_ai/icons8-rewind-100.png"/>
+                            Previous
+                        </button>
+                        <button className="flash-cards-button-flip" onClick={() => flipFlashCards()}>
+                            <img className="flash-cards-button-images" src="/images/learn_with_ai/icons8-flip-50 (1).png" />
+                            Flip
+                        </button>
+                        <button className="flash-cards-button-previous" onClick={() => nextFlashCards()}>
+                            Next
+                            <img className="flash-cards-button-images" src="/images/learn_with_ai/icons8-fast-forward-100.png" />
+                        </button>
                     </div>
                 </div>
             )}
 
             {/* don't forget to turn off disable after finishing with flashcards,quizzes!!!!!!! */}
+
+            {somethingWentWrong && (
+                <p className="something-went-wrong">
+                    Ooops! Something went wrong...
+                </p>
+            )}
         </div>
 
     )
