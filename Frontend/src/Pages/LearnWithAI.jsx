@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/axios"
 import './LearnWithAI.css'
@@ -21,6 +21,18 @@ export function LearnWithAI() {
     const [numberOfFlashCards, setNumberOfFlashCards] = useState(null);
     const [progressNumber, setProgressNumber] = useState(1);
 
+    useEffect( () => {
+        if (isGenerating) {
+            document.getElementById("flash_cards_loader_object_container_id").scrollIntoView({behavior: "smooth"});
+        }
+    }, [isGenerating])
+
+    useEffect( () => {
+        if (isLearningFlashCards) {
+            document.getElementById("flash_cards_container_id").scrollIntoView({behavior: "smooth"});
+        }
+    }, [isLearningFlashCards]);
+
     function generateFlashCardsOnClick() {
         setIsGenerating(true);
         api.post(
@@ -40,21 +52,27 @@ export function LearnWithAI() {
         })
         .finally( () => {
             setIsGenerating(false);
-            document.getElementById("flash_cards_container_id").scrollIntoView({behavior: "smooth"})
         })
     }
 
     function generateQuizOnClick() {
+        setIsGenerating(true);
         api.post(
             `http://localhost:5000/api/notebooklm/generate-quiz/${topicId}`
         )
         .then(res => {
             setGeneratedQuiz(res.data.questions);
             console.log(res.data.questions);
-            setIsLearningQuiz(true);   
+            setIsLearningQuiz(true);
+            setIsGenerating(false);
         })
         .catch(err => {
             console.log("Error fetching lesson data:", err.response?.data);
+            setSomethingWentWrong(true);
+        })
+        .finally( () => {
+            setIsGenerating(false);
+            // scrool to quiz after generated ...
         })
     }
 
@@ -136,7 +154,7 @@ export function LearnWithAI() {
                     <span className="cards-description">Challenge yourself with AI-generated quiz questions to test your knowledge, identify weak areas, and reinforce what you've learned.</span>
                     
                     <div className="cards-button-container">
-                        <button disabled={isLearningFlashCards || isLearningQuiz} className="cards-button" /* onClick={() => generateQuizOnClick()} */>
+                        <button disabled={isLearningFlashCards || isLearningQuiz} className="cards-button" onClick={() => generateQuizOnClick()}>
                             <div className="cards-button-label-container">
                                 Generate <img className="cards-arrow-image" src="/images/learn_with_ai/icons8-right-arrow-100 (2).png" />
                             </div>
@@ -148,7 +166,7 @@ export function LearnWithAI() {
 
             {isGenerating && (
                         <div className="flash-cards-loader-container">
-                            <div className="flash-cards-loader-object-container">
+                            <div id="flash_cards_loader_object_container_id" className="flash-cards-loader-object-container">
                                 <div className="flash-cards-loader-object" />
                                 <div className="flash-cards-loader-object" />
                                 <div className="flash-cards-loader-object" />
@@ -216,6 +234,25 @@ export function LearnWithAI() {
                 <p className="something-went-wrong">
                     Ooops! Something went wrong...
                 </p>
+            )}
+
+            {isLearningQuiz && (
+                generatedQuiz.map( quiz => {
+                    return (
+                        <>
+                            <span>{quiz.question}</span>
+                            {quiz.answerOptions.map( option => {
+                                return (
+                                    <>
+                                        <span>{option.text}</span>
+                                        <span>{option.isCorrect}</span>
+                                    </>
+                                )
+                            })}
+                        </>
+                    )
+
+                })
             )}
         </div>
 

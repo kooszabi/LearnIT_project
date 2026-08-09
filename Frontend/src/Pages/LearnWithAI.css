@@ -136,6 +136,7 @@
     align-items: center;
     gap: 30px;
     visibility:visible;
+    margin-bottom: 30px;
 }
 
 .flash-cards-loader-object-container {
