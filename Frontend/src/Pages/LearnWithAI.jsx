@@ -6,7 +6,7 @@ import './LearnWithAI.css'
 export function LearnWithAI() {
     const topicId = useParams().topicId;
     const [generatedFlashCards, setGeneratedFlashCards] = useState(null);
-    const [generatedQuiz, setGeneratedQuiz] = useState(null);
+    const [generatedQuiz, setGeneratedQuiz] = useState([]);
     const [isLearningFlashCards, setIsLearningFlashCards] = useState(false);
     const [isLearningQuiz, setIsLearningQuiz] = useState(false);
     const [flashCardsIndex, setFlashCardsIndex] = useState(0);
@@ -20,6 +20,13 @@ export function LearnWithAI() {
     //flashcards progress variables
     const [numberOfFlashCards, setNumberOfFlashCards] = useState(null);
     const [progressNumber, setProgressNumber] = useState(1);
+    //quiz questions progress variables
+    const [numberOfQuizQuestions, setNumberOfQuizQuestions] = useState(null);
+    const [isHint, setIsHint] = useState(false);
+    const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
+    const [shuffledOptions, setShuffledOptions] = useState([]);
+    const [lock, setLock] = useState(false);
+    const [selected, setSelected] = useState(null);
 
     useEffect( () => {
         if (isGenerating) {
@@ -33,7 +40,14 @@ export function LearnWithAI() {
         }
     }, [isLearningFlashCards]);
 
+    useEffect( () => {
+        if (isLearningQuiz) {
+            document.getElementById("quiz_container").scrollIntoView({behavior: "smooth"});
+        }
+    })
+
     function generateFlashCardsOnClick() {
+        setSomethingWentWrong(false);
         setIsGenerating(true);
         api.post(
             `http://localhost:5000/api/notebooklm/generate-flashcards/${topicId}`
@@ -56,6 +70,7 @@ export function LearnWithAI() {
     }
 
     function generateQuizOnClick() {
+        setSomethingWentWrong(false);
         setIsGenerating(true);
         api.post(
             `http://localhost:5000/api/notebooklm/generate-quiz/${topicId}`
@@ -65,6 +80,8 @@ export function LearnWithAI() {
             console.log(res.data.questions);
             setIsLearningQuiz(true);
             setIsGenerating(false);
+            setShuffledOptions(shuffleOptions(res.data.questions[0].answerOptions));
+            setNumberOfQuizQuestions(res.data.questions.length);
         })
         .catch(err => {
             console.log("Error fetching lesson data:", err.response?.data);
@@ -91,6 +108,7 @@ export function LearnWithAI() {
             setIsLearningFlashCards(false);
             setFlashCardsIndex(0);
             setProgressNumber(1);
+            document.getElementById("learn_with_ai_title").scrollIntoView({behavior: "smooth"});
         }
         else {
             setFlashCardsIndex(prev => prev + 1);
@@ -107,10 +125,64 @@ export function LearnWithAI() {
             .replace(/`/g, "");
     }
 
+    function nextQuizQuestion() {
+        if (generatedQuiz.length - 1 === quizQuestionIndex) {
+            setIsLearningQuiz(false);
+            setQuizQuestionIndex(0);
+            setProgressNumber(1);
+            setIsHint(false);
+            setShuffledOptions([])
+            document.getElementById("learn_with_ai_title").scrollIntoView({behavior: "smooth"});
+        }
+        else {
+            const nextIndex = quizQuestionIndex + 1;
+            setQuizQuestionIndex(nextIndex);
+            setProgressNumber(prev => prev + 1);
+            setLock(false);
+            setSelected(null);
+            setIsHint(false);
+            setShuffledOptions(shuffleOptions(generatedQuiz[nextIndex].answerOptions));
+        }
+    }
+
+    function previousQuizQuestion() {
+        const previousIndex = quizQuestionIndex - 1;
+        setQuizQuestionIndex(previousIndex);
+        setProgressNumber(prev => prev - 1);
+        setLock(false);
+        setSelected(null);
+        setIsHint(false);
+        setShuffledOptions(shuffleOptions(generatedQuiz[previousIndex].answerOptions));
+    }
+
+    function checkAns(qo) {
+        if (!lock) {
+            setSelected(qo.text);
+            setLock(true);
+        }
+    }
+
+    function shuffleOptions(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    function setHint() {
+        if (isHint) {
+            setIsHint(false);
+        }
+        else {
+            setIsHint(true);
+        }
+    }
 
     return (
         <div className="learn-with-ai-page-container">
-            <h1 className="learn-with-ai-title">Learn with AI</h1>
+            <h1 id="learn_with_ai_title" className="learn-with-ai-title">Learn with AI</h1>
 
             <div className="cards-container">
 
@@ -237,23 +309,74 @@ export function LearnWithAI() {
             )}
 
             {isLearningQuiz && (
-                generatedQuiz.map( quiz => {
-                    return (
-                        <>
-                            <span>{quiz.question}</span>
-                            {quiz.answerOptions.map( option => {
-                                return (
-                                    <>
-                                        <span>{option.text}</span>
-                                        <span>{option.isCorrect}</span>
-                                    </>
-                                )
-                            })}
-                        </>
-                    )
+                <div id="quiz_container" className="quiz-container">
+                    <div className="quiz-card-container">
 
-                })
+                        <div className="flash-cards-container-hline" />
+
+                        <div className="quiz-card-title-container">
+                            <img className="quiz-card-title-image" src="" />
+                            <span className="quiz-card-title">Quiz</span>
+                            <progress className="quiz-card-title-progress-bar" max={numberOfQuizQuestions} value={progressNumber} />
+                            <span className="quiz-card-title-progress-text">Question {progressNumber} of {numberOfQuizQuestions}</span>
+                        </div>
+
+                        <div className="quiz-question-container">
+                            <img className="quiz-question-image" src="" />
+                            <span className="quiz-question-text">{cleanText(generatedQuiz[quizQuestionIndex].question)}</span>
+                        </div>
+
+                        <div className="quiz-question-options-container">
+                            <ul className="quiz-question-options-list">
+                                {shuffledOptions.map((qo) => {
+                                    let classname = "";
+                                    if (lock) {
+                                        if (qo.isCorrect) {
+                                            classname = "correct";
+                                        } 
+                                        else if (qo.text === selected) {
+                                            classname = "wrong";
+                                        }
+                                    }
+                                    return (
+                                        <li
+                                            key={qo.rationale}
+                                            className={classname}
+                                            onClick={() => checkAns(qo)}
+                                        >{cleanText(qo.text)}</li>
+                                    )
+                                })}
+                                
+
+                            </ul>
+                        </div>
+
+                        <div className="quiz-card-buttons-container">
+                            <button onClick={setHint} className="quiz-card-hint-button">
+                                <img className="quiz-card-hint-image" src="" />
+                                Hint
+                            </button>
+                            <button disabled={quizQuestionIndex === 0} onClick={previousQuizQuestion} className="quiz-card-hint-button">
+                                <img className="quiz-card-hint-image" src="" />
+                                Previous
+                            </button>
+                            <button disabled={!lock} onClick={nextQuizQuestion} className="quiz-card-hint-button">
+                                Next
+                                <img className="quiz-card-hint-image" src="" />
+                            </button>
+                        </div>
+
+                        {isHint && (
+                            <div className="quiz-card-hint-container">
+                                <span className="quiz-card-hint-text">{generatedQuiz[quizQuestionIndex].hint}</span>
+                            </div>
+                        )}
+
+                    </div>
+                </div>
             )}
+
+                
         </div>
 
     )

@@ -343,3 +343,11 @@
 .flash-cards-button-images {
     width: 20px;
 }
+
+.quiz-question-options-list li.wrong {
+    background-color: #d30d0d;
+}
+
+.quiz-question-options-list li.correct {
+    background-color: #028a2f;
+}
