@@ -66,6 +66,7 @@
     max-width: 80%;
     margin: 20px auto;
     gap: 20px;
+    justify-content: center;
 }
 
 .best-topic-container {
