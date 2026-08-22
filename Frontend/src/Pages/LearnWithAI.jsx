@@ -309,20 +309,21 @@ export function LearnWithAI() {
             )}
 
             {isLearningQuiz && (
-                <div id="quiz_container" className="quiz-container">
-                    <div className="quiz-card-container">
+                <div className="quiz-container">
 
-                        <div className="flash-cards-container-hline" />
+                    <div className="flash-cards-container-hline" />
+
+                    <div id="quiz_container" className="quiz-card-container">
 
                         <div className="quiz-card-title-container">
-                            <img className="quiz-card-title-image" src="" />
+                            <img className="quiz-card-title-image" src="/images/learn_with_ai/icons8-quiz-100 (1).png" />
                             <span className="quiz-card-title">Quiz</span>
                             <progress className="quiz-card-title-progress-bar" max={numberOfQuizQuestions} value={progressNumber} />
                             <span className="quiz-card-title-progress-text">Question {progressNumber} of {numberOfQuizQuestions}</span>
                         </div>
 
                         <div className="quiz-question-container">
-                            <img className="quiz-question-image" src="" />
+                            <img className="quiz-question-image" src="/images/learn_with_ai/icons8-coding-100 (1).png" />
                             <span className="quiz-question-text">{cleanText(generatedQuiz[quizQuestionIndex].question)}</span>
                         </div>
 
@@ -343,7 +344,16 @@ export function LearnWithAI() {
                                             key={qo.rationale}
                                             className={classname}
                                             onClick={() => checkAns(qo)}
-                                        >{cleanText(qo.text)}</li>
+                                            style={{cursor: lock ? "auto" : "pointer"}}
+                                        >
+                                            <div className="question-options-li-container">
+                                                {cleanText(qo.text)}
+                                                <img className="quiz-question-options-images" 
+                                                    src={lock && classname === "correct" ? "/images/learn_with_ai/icons8-tick-100 (2).png" : 
+                                                        lock && classname === "wrong" ? "/images/learn_with_ai/icons8-wrong-100 (1).png" : ""}
+                                                />
+                                            </div>
+                                        </li>
                                     )
                                 })}
                                 
@@ -353,16 +363,16 @@ export function LearnWithAI() {
 
                         <div className="quiz-card-buttons-container">
                             <button onClick={setHint} className="quiz-card-hint-button">
-                                <img className="quiz-card-hint-image" src="" />
+                                <img className="quiz-card-hint-image" src="/images/learn_with_ai/icons8-hint-100 (1).png" />
                                 Hint
                             </button>
-                            <button disabled={quizQuestionIndex === 0} onClick={previousQuizQuestion} className="quiz-card-hint-button">
-                                <img className="quiz-card-hint-image" src="" />
+                            <button disabled={quizQuestionIndex === 0} onClick={previousQuizQuestion} className="quiz-card-previous-button">
+                                <img className="quiz-card-hint-image" src="/images/learn_with_ai/icons8-left-arrow-100.png" />
                                 Previous
                             </button>
-                            <button disabled={!lock} onClick={nextQuizQuestion} className="quiz-card-hint-button">
+                            <button disabled={!lock} onClick={nextQuizQuestion} className="quiz-card-next-button">
                                 Next
-                                <img className="quiz-card-hint-image" src="" />
+                                <img className="quiz-card-hint-image" src="/images/learn_with_ai/icons8-right-arrow-100 (2).png" />
                             </button>
                         </div>
 
