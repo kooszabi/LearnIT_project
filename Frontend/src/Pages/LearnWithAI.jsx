@@ -95,6 +95,7 @@ export function LearnWithAI() {
 
     function flipFlashCards() {
         setFlashCardsState(prev => !prev);
+
     }
 
     function previousFlashCards() {
@@ -122,7 +123,8 @@ export function LearnWithAI() {
             .replace(/\$/g, "")
             .replace(/\\text\{([^}]*)\}/g, "$1")
             .replace(/\\_/g, "_")
-            .replace(/`/g, "");
+            .replace(/`/g, "")
+            .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, "$1/$2");
     }
 
     function nextQuizQuestion() {
@@ -271,18 +273,33 @@ export function LearnWithAI() {
                         </div>
                     </div>
 
-                    <div className="flash-cards">
-                        <div className="flash-card-front-or-back-text-container">
-                            <span className="flash-cards-front-or-back-text">
-                                {flashCardsState ? "Back" : "Front"}
+
+                    <div id="flash-cards" className={`flash-cards ${flashCardsState ? "flipped" : "not-flipped"}`}>
+                        <div className="flash-cards-front">
+                            <div className="flash-card-front-or-back-text-container">
+                                <span className="flash-cards-front-or-back-text">
+                                    Front
+                                </span>
+                            </div>
+                            <img className="flash-cards-image" src="/images/learn_with_ai/icons8-brain-100.png" />
+                            <span className="flash-cards-text"> 
+                                {cleanText(generatedFlashCards[flashCardsIndex].front)}
                             </span>
                         </div>
-                        <img className="flash-cards-image" src="/images/learn_with_ai/icons8-brain-100.png" />
-                        <span className="flash-cards-text">
-                            {flashCardsState ? 
-                                cleanText(generatedFlashCards[flashCardsIndex].back) : cleanText(generatedFlashCards[flashCardsIndex].front)}
-                        </span>
+                        <div className="flash-cards-back">
+                            <div className="flash-card-front-or-back-text-container">
+                                <span className="flash-cards-front-or-back-text">
+                                    Back
+                                </span>
+                            </div>
+                            <img className="flash-cards-image" src="/images/learn_with_ai/icons8-brain-100.png" />
+                            <span className="flash-cards-text">
+                                    {cleanText(generatedFlashCards[flashCardsIndex].back)}
+                            </span>
+                        </div>
                     </div>
+
+
                     <div className="flash-cards-buttons-container">
                         <button className="flash-cards-button-previous" disabled={flashCardsIndex === 0} onClick={() => previousFlashCards()}>
                             <img className="flash-cards-button-images" src="/images/learn_with_ai/icons8-rewind-100.png"/>
@@ -313,9 +330,9 @@ export function LearnWithAI() {
 
                     <div className="flash-cards-container-hline" />
 
-                    <div id="quiz_container" className="quiz-card-container">
+                    <div className="quiz-card-container">
 
-                        <div className="quiz-card-title-container">
+                        <div id="quiz_container" className="quiz-card-title-container">
                             <img className="quiz-card-title-image" src="/images/learn_with_ai/icons8-quiz-100 (1).png" />
                             <span className="quiz-card-title">Quiz</span>
                             <progress className="quiz-card-title-progress-bar" max={numberOfQuizQuestions} value={progressNumber} />
