@@ -30,6 +30,7 @@ export function Quiz(props) {
     const [progress, setProgress] = useState(1);
 
     const [wrongSolution, setWrongSolution] = useState([]);
+    const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(false);
 
     /* const [apiResponseResult, setApiResponseResult] = useState(null); */
     const [userCode, setUserCode] = useState("");
@@ -117,6 +118,7 @@ export function Quiz(props) {
     async function CodingExerciseCorrection() {
         const btn = document.querySelector(".submit-button");
         btn.classList.add("button-loading");
+        setIsSubmitButtonDisabled(true);
         try {
             const res = await api.post(
                 "http://localhost:5000/api/fix-codes/fix-code",
@@ -128,6 +130,8 @@ export function Quiz(props) {
             console.log("coding exercise correction api response: ", res.data);
             console.log("coding exercise correction api RESULT response: ", res.data.response);
             checkAnsCoding(res.data.response);
+            document.getElementById("coding-exercise-result-div").scrollIntoView({behavior: "smooth"});
+
         } catch (err) {
             console.log("Error: ", err.response?.data);
             console.log("FULL ERROR:", err);
@@ -135,6 +139,7 @@ export function Quiz(props) {
             console.log("REQUEST:", err.request);
         }
         btn.classList.remove("button-loading");
+        setIsSubmitButtonDisabled(false);
     }
 
     return (
@@ -143,7 +148,7 @@ export function Quiz(props) {
                 <div className="container">
 
                     <div className="progress-bar-container">
-                        <progress className="progress-bar" max={number} value={progress} />
+                        <progress className="quiz-progress-bar" max={number} value={progress} />
                         <p className="progress-number">{progress} out of {number}</p>
                     </div>
 
@@ -165,6 +170,7 @@ export function Quiz(props) {
                                     key={qo.id}
                                     className={className}
                                     onClick={() => checkAns(qo)}
+                                    style={{cursor: lock ? "auto" : "pointer"}}
                                 >
                                     {qo.question_option_text}
                                 </li>
@@ -187,7 +193,7 @@ export function Quiz(props) {
                 <div className="container">
 
                     <div className="progress-bar-container">
-                        <progress className="progress-bar" max={number} value={progress} />
+                        <progress className="quiz-progress-bar" max={number} value={progress} />
                         <p className="progress-number">{progress} out of {number}</p>
                     </div>
 
@@ -204,7 +210,7 @@ export function Quiz(props) {
                     </div>
 
                     <div className="code-editor-submit-next-buttons-container">
-                        <button className="submit-button" onClick={CodingExerciseCorrection}>
+                        <button disabled={isSubmitButtonDisabled} className="submit-button" onClick={CodingExerciseCorrection}>
                             <span className="submit-text">Submit solution</span>
                             <img className="submit-arrow" src="/images/component_icons/icons8-complete-100.png" />
                         </button>
@@ -217,7 +223,7 @@ export function Quiz(props) {
 
                     {codingExerciseResult !== null && (
                         <>
-                            <div className={codingExerciseResult ? "correct-solution" : "wrong-solution"}>
+                            <div id="coding-exercise-result-div" className={codingExerciseResult ? "correct-solution" : "wrong-solution"}>
                                 <p>{codingExerciseResult ? "Correct solution" : "Incorrect solution"}</p>
                             </div>
                             <p className="wrong-solution-explanation">{codingOnWrongExplanation}</p>

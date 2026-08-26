@@ -82,7 +82,8 @@
 }
 
 .next-button:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .arrow-img {
@@ -102,6 +103,12 @@
     background-color: #5a189a;
     border-radius: 32px;
 }
+
+.submit-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 .submit-text {
     font-family: 'Poppins', sans-serif;
     font-weight: 350;
@@ -310,23 +317,23 @@
     padding-top: 30px;
     padding-bottom: 10px;
     display: flex;
-    gap: 10px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
 }
 
-.progress-bar {
+.quiz-progress-bar {
     -webkit-appearance: none;
     appearance: none;
-    height: 20px;
+    height: 12px;
     width: 500px;
 }
-.progress-bar::-webkit-progress-bar {
+.quiz-progress-bar::-webkit-progress-bar {
     background-color: #FFFFFF;
     border-radius: 10px;
 }
 
-.progress-bar::-webkit-progress-value {
+.quiz-progress-bar::-webkit-progress-value {
     background-color: #38b000;
     border-radius: 10px;
 }
