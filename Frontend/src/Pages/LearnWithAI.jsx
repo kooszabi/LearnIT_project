@@ -44,7 +44,7 @@ export function LearnWithAI() {
         if (isLearningQuiz) {
             document.getElementById("quiz_container").scrollIntoView({behavior: "smooth"});
         }
-    })
+    }, [isLearningQuiz])
 
     function generateFlashCardsOnClick() {
         setSomethingWentWrong(false);
@@ -76,12 +76,12 @@ export function LearnWithAI() {
             `http://localhost:5000/api/notebooklm/generate-quiz/${topicId}`
         )
         .then(res => {
-            setGeneratedQuiz(res.data.questions);
+            setGeneratedQuiz(res.data.questions.filter(question => question.type === 'multiple_choice'));
             console.log(res.data.questions);
             setIsLearningQuiz(true);
             setIsGenerating(false);
-            setShuffledOptions(shuffleOptions(res.data.questions[0].answerOptions));
-            setNumberOfQuizQuestions(res.data.questions.length);
+            setShuffledOptions(shuffleOptions(res.data.questions.filter(question => question.type === 'multiple_choice')[0].answerOptions));
+            setNumberOfQuizQuestions(res.data.questions.filter(question => question.type === 'multiple_choice').length);
         })
         .catch(err => {
             console.log("Error fetching lesson data:", err.response?.data);

@@ -60,7 +60,7 @@ class NotebookLMService:
             async with NotebookLMClient.from_storage() as client:
                 generated_quiz = await client.artifacts.generate_quiz(notebook_id=self.notebook_id,
                                                                                 source_ids=source_ids,
-                                                                                quantity=QuizQuantity.STANDARD,
+                                                                                quantity=QuizQuantity.MORE,
                                                                                 difficulty=QuizDifficulty.EASY)
                 await client.artifacts.wait_for_completion(notebook_id=self.notebook_id,
                                                         task_id=generated_quiz.task_id)
