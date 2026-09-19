@@ -40,12 +40,13 @@ def google_login():
         if google_response.status_code != 200:
             return jsonify({'error': 'Invalid token'}), 401
         
-        print("\n\n\n\n", google_response, "\n\n\n\n")
+        print("\n\n\n\nGoogle oauth2 response", google_response.json(), "\n\n\n\n")
         user_info = google_response.json()
         provider_user_id = user_info.get('sub')
         email = user_info.get('email')
         username = user_info.get('name')
         created_at = datetime.utcnow()
+        profile_picture = user_info.get('picture')
 
     except Exception as e:
         return jsonify({'error': str(e)}), 401
@@ -84,7 +85,8 @@ def google_login():
                 'email': user.email,
                 'created_at': user.created_at,
                 'provider_user_id': provider_user_id,
-                'provider_name': auth_provider.provider_name
+                'provider_name': auth_provider.provider_name,
+                'profile_picture': profile_picture
             }
         }), 201
     
@@ -109,7 +111,8 @@ def google_login():
                 'email': user.email,
                 'created_at': user.created_at,
                 'provider_user_id': provider_user_id,
-                'provider_name': auth_provider.provider_name
+                'provider_name': auth_provider.provider_name,
+                'profile_picture': profile_picture
             }
         }), 201
     
@@ -125,7 +128,8 @@ def google_login():
                 'email': user.email,
                 'created_at': user.created_at,
                 'provider_user_id': provider_user_id,
-                'provider_name': auth_provider.provider_name
+                'provider_name': auth_provider.provider_name,
+                'profile_picture': profile_picture
             }
         }), 200
 
@@ -228,6 +232,7 @@ def github_login():
             "Authorization": f"Bearer {access_token}"
         }
     )
+    print("\n\n\n\nGithub user response", user_response.json(), "\n\n\n\n")    
     user_email_response = github_requests.get(
         "https://api.github.com/user/emails",
         headers={
@@ -242,6 +247,7 @@ def github_login():
     username = user_data.get('login')
     provider_user_id = user_data.get('id')
     created_at = datetime.utcnow()
+    profile_picture = user_data.get('avatar_url')
 
 
     user_email_data = user_email_response.json()
@@ -286,7 +292,8 @@ def github_login():
                 'email': user.email,
                 'created_at': user.created_at,
                 'proivider_user_id': provider_user_id,
-                'provider_name': auth_provider.provider_name
+                'provider_name': auth_provider.provider_name,
+                "profile_picture": profile_picture
             }
         }), 201
 
@@ -312,7 +319,8 @@ def github_login():
                 'email': user.email,
                 'created_at': user.created_at,
                 'proivider_user_id': provider_user_id,
-                'provider_name': auth_provider.provider_name
+                'provider_name': auth_provider.provider_name,
+                "profile_picture": profile_picture
             }
         }), 201
 
@@ -328,6 +336,7 @@ def github_login():
                 'email': user.email,
                 'created_at': user.created_at,
                 'proivider_user_id': provider_user_id,
-                'provider_name': auth_provider.provider_name
+                'provider_name': auth_provider.provider_name,
+                "profile_picture": profile_picture
             }
         }), 200

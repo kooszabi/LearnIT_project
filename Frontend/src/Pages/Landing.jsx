@@ -43,6 +43,9 @@ export function Landing() {
             }
             console.log("email: ", res.data.user?.email);
             navigate("/home");
+            if (res.data.user?.profile_picture) {
+                localStorage.setItem("profile_picture", res.data.user.profile_picture);
+            }
         } catch (err) {
             console.log("err: ", err.response?.data);
         }
@@ -72,6 +75,9 @@ export function Landing() {
                         localStorage.setItem("token", res.data.token);
                     }
                     console.log("email: ", res.data.user?.email);
+                    if (res.data?.user) {
+                        localStorage.setItem("profile_picture", res.data.user.profile_picture);
+                    }
                     navigate("/home");
                 } catch (err) {
                     /* console.log('GitHub login failed: ', err.response?.data); */
