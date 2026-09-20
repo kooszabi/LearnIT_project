@@ -1,10 +1,11 @@
 import { googleLogout } from "@react-oauth/google"
-import { useNavigate, Outlet } from "react-router-dom"
+import { useNavigate, Outlet, useLocation } from "react-router-dom"
 import './Layout.css'
 import { BreadCrumbs } from "./BreadCrumbs";
 import { useState } from "react"
 
 export function Layout() {
+    const location = useLocation();
 
     const navigate = useNavigate();
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
@@ -70,7 +71,7 @@ export function Layout() {
                 <div className="main-content">
 
                     <div className="bread-crumbs-navbar">
-                        <BreadCrumbs />
+                        <BreadCrumbs pathname={location.pathname}/>
                     </div>
 
                     <div className="page-content">

@@ -122,18 +122,20 @@
 }
 
 .icons-navbar {
-    height: 96vh;
+    height: 100vh;
     width: 60px;
     background-color: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    border-radius: 32px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    border-radius: 0 0 32px 0;
+    box-shadow: 0px 60px 10px rgba(0,0,0,0.25);
+    /* margin-left: 10px; */
+    /* margin-bottom: 10px; */
+    /* margin-top: 10px; */
     display: none;
     justify-content: center;
     align-items: center;
     transition: width 0.3s ease;
+    position: sticky;
+    top: 0;
 }
 
 .icons-navbar ul {
@@ -184,15 +186,11 @@
 
 .bread-crumbs-navbar {
     height: 60px;
+    width: 100%;
     display: flex;
-    padding: 0 30px;
-    border-bottom: 1px solid #ddd;
-    align-items: center;
+    box-sizing: border-box;
     position: sticky;
     top: 0;
-    
+    z-index: 1;
 }
 
-.page-content {
-    /* padding: 30px; */
-}
