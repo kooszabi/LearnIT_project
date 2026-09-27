@@ -9,9 +9,9 @@ export function BreadCrumbs(props) {
         return (
             <div className="breadcrumbs-container">
                 <div className="breadcrumbs-div">
-                    <Link to="/home">Home</Link>
+                    <Link to="/home" style={{fontWeight: "bold"}}>Home</Link>
                     <span> &gt; </span>
-                    <Link to="/statistics">Statistics</Link>
+                    <Link to="/statistics" style={{fontWeight: "bold"}}>Statistics</Link>
                     <span> &gt; </span>
                     <span>Learn With AI</span>
                 </div>
@@ -23,7 +23,7 @@ export function BreadCrumbs(props) {
         return (
             <div className="breadcrumbs-container">
                 <div className="breadcrumbs-div">
-                    <Link to="/home">Home</Link>
+                    <Link to="/home" style={{fontWeight: "bold"}}>Home</Link>
                     <span> &gt; </span>
                     <span>Statistics</span>
                 </div>
@@ -35,7 +35,7 @@ export function BreadCrumbs(props) {
         return (
             <div className="breadcrumbs-container">
                 <div className="breadcrumbs-div">
-                    <Link to="/home">Home</Link>
+                    <Link to="/home" style={{fontWeight: "bold"}}>Home</Link>
                     <span> &gt; </span>
                     <span>Python</span>
                 </div>

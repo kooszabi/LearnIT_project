@@ -133,7 +133,7 @@ export function LearnWithAI() {
             setQuizQuestionIndex(0);
             setProgressNumber(1);
             setIsHint(false);
-            setShuffledOptions([])
+            setShuffledOptions([]);
             document.getElementById("learn_with_ai_title").scrollIntoView({behavior: "smooth"});
         }
         else {
