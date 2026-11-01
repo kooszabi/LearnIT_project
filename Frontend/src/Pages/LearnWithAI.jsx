@@ -283,7 +283,7 @@ export function LearnWithAI() {
                             </div>
                             <img className="flash-cards-image" src="/images/learn_with_ai/icons8-brain-100.png" />
                             <span className="flash-cards-text"> 
-                                {cleanText(generatedFlashCards[flashCardsIndex].front)}
+                                {cleanText(generatedFlashCards[flashCardsIndex].front.flashcardContentBlock[0].content)}
                             </span>
                         </div>
                         <div className="flash-cards-back">
@@ -294,7 +294,7 @@ export function LearnWithAI() {
                             </div>
                             <img className="flash-cards-image" src="/images/learn_with_ai/icons8-brain-100.png" />
                             <span className="flash-cards-text">
-                                    {cleanText(generatedFlashCards[flashCardsIndex].back)}
+                                    {cleanText(generatedFlashCards[flashCardsIndex].back.flashcardContentBlock[0].content)}
                             </span>
                         </div>
                     </div>

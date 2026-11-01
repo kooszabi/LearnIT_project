@@ -32,7 +32,7 @@ export function LessonProgressCard(props) {
 
                 <ResponsiveContainer width='100%' height='100%' className='res'>
                     <PieChart>
-                        <Pie data={data} dataKey="value" nameKey="name" outerRadius={110} innerRadius={85} startAngle={45} endAngle={-315} />
+                        <Pie data={data} dataKey="value" nameKey="name" outerRadius={110} innerRadius={85} startAngle={90} endAngle={-270} stroke="none" />
                         <Tooltip
                             contentStyle={{
                                 border: '1px solid #212529',

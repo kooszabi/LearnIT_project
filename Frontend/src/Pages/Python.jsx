@@ -11,8 +11,8 @@ export function Python() {
                     <div className="variable-title-hline"/>
                 </div>
                 <div className="variable-content-container">
-                    <Card key={1} lessonId={1}/>
-                    <Card key={2} lessonId={2}/>
+                    <Card key={1} lessonId={16}/>
+                    <Card key={2} lessonId={17}/>
 
                 </div>
                 
